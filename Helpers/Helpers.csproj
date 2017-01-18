@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
