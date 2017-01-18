@@ -1,0 +1,62 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.Passports>
+@using InternetBankLemonade.Models;
+@{
+    AuthModel _auth = new AuthModel();
+    if (_auth.IsAdmin(User.Identity.Name))
+    {
+        Layout = "~/Views/Shared/AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    
+    ViewBag.Title = "Администратор";
+}
+<h2>Добавление паспорта</h2>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="row">
+            @if (@Session["Success"] != null && @Session["Success"].ToString() == "1")
+            {
+                Session["Success"] = null;
+                <div class="col-sm-12 alert alert-success">
+                    <p>Успешно добавлено</p>
+                </div>
+
+            }
+            @if (@Session["Error"] != null && @Session["Error"].ToString() == "1")
+            {
+                Session["Error"] = null;
+                <div class="col-sm-12 alert alert-danger">
+                    <p>Данный номер уже зарегистрирован</p>
+                </div>
+
+            }
+        </div>
+        <div class="row">
+            <form class="form-horizontal" id="submitForm" action="~/Admin/Passport" method="POST">
+                @Html.AntiForgeryToken()
+                <fieldset>
+                    <div class="form-group col-md-12">
+                        <label class="control-label">Личный номер</label>
+                        <input class="form-control" autocomplete="off" required maxlength="30" type="text" name="PassportNumber" />
+                    </div>
+                    <br />
+                    <input class="btn btn-primary" id="submitBtn" type="submit" value="Добавить" />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+</script>

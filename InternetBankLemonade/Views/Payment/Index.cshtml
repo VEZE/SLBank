@@ -1,0 +1,70 @@
+﻿@using InternetBankLemonade.Models
+@model IEnumerable<InternetBankLemonade.Models.Services>
+@{
+    ViewBag.Title = "Оплата";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Оплата</h2>
+
+@{ var cards = Session["Cards"] as List<Account>;}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<div class="col-md-12">
+    <div class="container">
+        <div class="row">
+            <form class="form-group" id="submitForm" action="~/Payment/CheckPayment" method="post">
+                @Html.AntiForgeryToken()
+                @if (Session["Response"] != null)
+                {
+                    <div class="col-sm-12 alert alert-danger">
+                        <p>@Session["Response"].ToString()</p>
+                    </div>
+                    Session["Response"] = null;
+                }
+                        <label class="control-label">Карта:</label>
+                <div class="form-group">
+                    <select class="form-control" name="FromCard" id="from-card">
+                        @foreach (var item in cards)
+                        {
+                            <option>@item.CardNumber</option>
+                        }
+                    </select>
+                    <label class="control-label" id="currency">USD</label>
+                </div>
+                <label class="control-label">Услуга:</label>
+                <select name="Id" class="form-control">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Id">@item.ServiceName</option>
+                    }
+                    </select>
+                <label class="control-label">Номер платежа</label>
+                <input class="form-control" autocomplete="off" required type="number" min="1" max="999999999999999" name="Number" />
+                <br />
+                <input class="btn btn-primary" id="submitBtn" value="Далее" type="submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#submitForm").submit(function() {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+        var label = $('#currency');
+        $('#from-card').on('change', '', function() {
+            if (this.selectedIndex == 1) {
+                label.text("BYN");
+            }
+            if (this.selectedIndex == 2) {
+                label.text("EUR");
+            }
+            if (this.selectedIndex == 0) {
+                label.text("USD");
+            }
+        });
+    });
+</script>

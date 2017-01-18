@@ -1,0 +1,58 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.Account>
+@{
+    ViewBag.Title = "Зачисление";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<h2>Зачисление</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <form action="~/Admin/Add" id="submitForm" class="form-horizontal" method="post">
+                @Html.AntiForgeryToken()
+                <label class="control-label" id="card">EUR</label>
+                <select class="form-control" name="CardId" id="CardId">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.Id">@item.CardNumber</option>
+                    }
+                </select>
+                <br/>
+                <input type="number" autocomplete="off" class="form-control" required min="0.1" step="0.1" max="1000" name="MoneyAmount" />
+                <br/>
+                <input type="submit" class="btn btn-primary" id="submitBtn" value="Зачислить"/>
+
+
+            </form>
+            <br />
+            <a href="~/Admin/Search" class="btn btn-info" id="btnBack">Назад</a>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            $("#btnBack").attr("disabled", true);
+            return true;
+        });
+        $("#btnBack").click(function() {
+            $("#btnBack").attr("disabled", true);
+        });
+        var card = $('#card');
+        $('#CardId').on('change', '', function () {
+            if (this.selectedIndex == 1) {
+                card.text("USD");
+            }
+            if (this.selectedIndex == 2) {
+                card.text("BYN");
+            }
+            if (this.selectedIndex == 0) {
+                card.text("EUR");
+            }
+        });
+    });
+</script>

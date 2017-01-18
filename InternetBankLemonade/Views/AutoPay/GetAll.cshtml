@@ -1,0 +1,64 @@
+﻿@model PagedList.IPagedList<InternetBankLemonade.Models.AutoPay>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Ваши услуги с автооплатой";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<h2>Ваши услуги с автооплатой</h2>
+
+<div class="col-lg-12">
+    <div class="container">
+        
+            @if (Session["Error"] != null)
+            {
+                <div class="col-sm-12 alert alert-danger">
+                    <p>@Session["Error"].ToString()</p>
+                </div>
+                Session["Error"] = null;
+            }
+            @if (Session["Success"] != null)
+            {
+                <div class="col-sm-12 alert alert-success">
+                    <p>@Session["Success"].ToString()</p>
+                </div>
+                Session["Success"] = null;
+            }
+            @if (Model.Count > 0)
+            {
+                <table class="table table-striped">
+                    <tr>
+                        <th><label>Номер карты</label></th>
+                        <th><label>Номер платежа</label></th>
+                        <th><label>Название услуги</label></th>
+                        <th><label>Сумма(BYN)</label></th>
+                        <th><label>Дата создания</label></th>
+                        <th><label>Дней до оплаты</label></th>
+                        <th><label>Действие</label></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        
+                        <tr>
+                            <td>@item.CardNumber</td>
+                            <td>@item.Number</td>
+                            <td>@item.ServiceId</td>
+                            <td>@item.MoneyAmount</td>
+                            <td>@item.CreationDate</td>
+                            @{var date = item.CreationDate.Date.AddDays(30) - DateTime.Now.Date;}
+                            <td>@date.Days</td>  
+                            <td>@Html.ActionLink("Удалить", "Delete", "AutoPay", new { id = item.Id }, null)</td>
+                        </tr>
+                    }
+                </table>
+                @Html.PagedListPager(Model, page => Url.Action("GetAll", new { page }))
+            }
+            else
+            {
+                <h2>У вас нет услуг с автооплатой</h2>
+            }
+       
+        
+
+    </div>
+</div>

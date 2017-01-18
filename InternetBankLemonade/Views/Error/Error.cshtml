@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Ошибка";
+    Layout = "~/Views/Shared/Error.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="row">
+                <h1>Ошибка.</h1>
+                <h2>При обработке запроса произошла ошибка. Обратитесь к администратору ресурса</h2>
+            </div>
+            <div class="row">
+                @if (User.Identity.Name != "")
+                {
+                    <a href="~/Dashboard/Index" class="btn btn-primary">На главную</a>
+                }
+                else
+                {
+                    <a href="~/Login/Index" class="btn btn-primary">На главную</a>
+                }
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,16 @@
+﻿@using InternetBankLemonade.Models;
+@{
+    AuthModel _auth = new AuthModel();
+    if (_auth.IsAdmin(User.Identity.Name))
+    {
+        Layout = "~/Views/Shared/AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    ViewBag.Title = "Лимонад";
+}
+
+<h2>Операция произведена успешно!</h2>
+

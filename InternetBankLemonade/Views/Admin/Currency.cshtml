@@ -1,0 +1,61 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.CurrencyRates>
+@{
+    ViewBag.Title = "Управление курсами валют";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<h2>Управление курсами валют</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            @if (Session["Error"] != null)
+            {
+                <div class="col-sm-12 alert alert-danger">
+                    <p>@Session["Error"].ToString()</p>
+                </div>
+                Session["Error"] = null;
+            }
+            @if (Session["Success"] != null)
+            {
+                <div class="col-sm-12 alert alert-success">
+                    <p>@Session["Success"].ToString()</p>
+                </div>
+                Session["Success"] = null;
+            }
+            <form class="form-horizontal" id="submitForm" method="post" action="~/Admin/Currency">
+                @Html.AntiForgeryToken()
+                <table class="table">
+                    <tr>
+                        <th>Валюта</th>
+                        <th>Курс</th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        if (item.CurrencyCode.Trim() != "BYN")
+                        {
+                            <tr>
+                                <td>@item.CurrencyCode.Trim()</td>
+                                <td><input class="form-control" autocomplete="off" type="number" required min="0.01" step="0.01" max="10" name="@item.CurrencyCode.Trim()" value="@item.AmountInBaseCurrency" /></td>
+                            </tr>
+                        }
+                    }
+
+                </table>
+                <br />
+                <input type="submit" class="btn btn-primary" id="SubminBtn" name="SubminBtn" value="Обновить" />
+            </form>
+        </div>
+        
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+</script>

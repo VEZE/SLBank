@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6b6bb03cbc2248e8aaf4002df4e5ed24" Name="Diagram1">
+        <EntityTypeShape EntityType="MainModel.Account" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.AutoPay" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.CurrencyRates" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.Orders" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.Passports" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.Services" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.SessionKeys" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MainModel.Users" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="MainModel.FK_Account_ToCurrencyRates" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Account_ToUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Orders_ToAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_AutoPay_ToServices" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Orders_ToCurrencyRates" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Services_ToCurrencyRates" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Orders_ToServices" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Orders_ToUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Users_ToPassports" ManuallyRouted="false" />
+        <AssociationConnector Association="MainModel.FK_Users_ToSessonKeys" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

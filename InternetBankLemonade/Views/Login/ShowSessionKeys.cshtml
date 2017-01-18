@@ -1,0 +1,37 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.SessionKeys>
+@{
+    ViewBag.Title = "СЕССИОННЫЕ КЛЮЧИ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Запишите Ваши ключи в надежное место!</h2>
+@if (Session["Response"] != null)
+{
+    <div class="col-sm-12 alert alert-success">
+        <p>@Session["Response"].ToString()</p>
+    </div>
+    Session["Response"] = null;
+}
+
+
+    <p>Ключ 1: @Session["k1"].ToString()</p>
+    <p>Ключ 2: @Session["k2"].ToString()</p>
+    <p>Ключ 3: @Session["k3"].ToString()</p>
+    <p>Ключ 4: @Session["k4"].ToString()</p>
+    <p>Ключ 5: @Session["k5"].ToString()</p>
+    <p>Ключ 6: @Session["k6"].ToString()</p>
+    <p>Ключ 7: @Session["k7"].ToString()</p>
+    <p>Ключ 8: @Session["k8"].ToString()</p>
+    <p>Ключ 9: @Session["k9"].ToString()</p>
+    <p>Ключ 10: @Session["k10"].ToString()</p>
+
+@{Session["k1"] = null;
+  Session["k2"] = null;
+Session["k3"] = null;
+Session["k4"] = null;
+Session["k5"] = null;
+Session["k6"] = null;
+Session["k7"] = null;
+Session["k8"] = null;
+Session["k9"] = null;
+Session["k10"] = null;}

@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <title>404</title>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <h1>Страница не найдена</h1>
+            @if (User.Identity.Name != "")
+            {
+                <a href="~/Dashboard/Index" class="btn btn-primary">На главную</a>
+            }
+            else
+            {
+                <a href="~/Login/Index" class="btn btn-primary">На главную</a>
+            }
+        </div>
+    </div>
+</div>
+</body>
+</html>

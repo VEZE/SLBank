@@ -1,0 +1,77 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.Account>
+@{
+    ViewBag.Title = "Перевод";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Перевод</h2>
+
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <form class="form-horizontal" id="submitForm" action="~/Transaction/Continue" method="post">
+                @Html.AntiForgeryToken()
+                @if (Session["Response"] != null)
+                {
+                    <div class="col-sm-12 alert alert-danger">
+                        <p>@Session["Response"].ToString()</p>
+                    </div>
+                    Session["Response"] = null;
+                }
+                <label class="control-label" id="from-card">С карты (USD)</label>
+                <select class="form-control" id="fromCard" name="fromCard">
+                    @foreach (var item in Model)
+                    {
+                        <option>@item.CardNumber</option>
+                    }
+                </select>
+
+                <label class="control-label" id="to-card">На карту (USD)</label>
+                <select class="form-control" id="toCard" name="toCard">
+
+                    @foreach (var item in Model)
+                    {
+                        <option>@item.CardNumber</option>
+                    }
+                </select>
+
+                <br/>
+                <input class="btn btn-primary" id="submitBtn" type="submit" value="Продолжить"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+        var fromLabel = $('#from-card');
+        var toLabel = $('#to-card');
+        $('#fromCard').on('change', '', function () {
+            if (this.selectedIndex == 1) {
+                fromLabel.text("С карты (BYN)");
+            }
+            if (this.selectedIndex == 2) {
+                fromLabel.text("С карты (EUR)");
+            }
+            if (this.selectedIndex == 0) {
+                fromLabel.text("С карты (USD)");
+            }
+        });
+        $('#toCard').on('change', '', function () {
+            if (this.selectedIndex == 1) {
+                toLabel.text("На карту (BYN)");
+            }
+            if (this.selectedIndex == 2) {
+                toLabel.text("На карту (EUR)");
+            }
+            if (this.selectedIndex == 0) {
+                toLabel.text("На карту (USD)");
+            }
+        });
+    });
+</script>

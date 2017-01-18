@@ -1,0 +1,85 @@
+﻿@model InternetBankLemonade.Models.Users
+@using InternetBankLemonade.Models;
+@{
+    AuthModel _auth = new AuthModel();
+    if (_auth.IsAdmin(User.Identity.Name))
+    {
+        Layout = "~/Views/Shared/AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    ViewBag.Title = "Мой Аккаунт";
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<h2>Мой Аккаунт</h2>
+
+<div class="container">
+    <div class="col-lg-12">
+        @if (Session["Response"] != null)
+        {
+            <div class="col-lg-12 alert alert-danger">
+                <p>@Session["Response"].ToString()</p>
+            </div>
+            Session["Response"] = null;
+        }
+    </div>
+    <div class="col-lg-6">
+        <div class="row">
+            <form class="form-horizontal" id="submitPassForm" action="~/MyAccount/Email" method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="control-label" for="EmailNew">Email (Текущий - @Model.Email)</label>
+                    <input class="form-control" autocomplete="off" required maxlength="40" type="email" id="EmailNew" name="EmailNew" value="" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="ConfirmEmail">Подтверждение Email</label>
+                    <input class="form-control" autocomplete="off" required maxlength="40" type="email" id="ConfirmEmail" name="ConfirmEmail" value="" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="Password">Текущий пароль</label>
+                    <input class="form-control" autocomplete="off" maxlength="40" required type="password" id="Password" name="Password" value="" />
+                </div>
+                <input class="btn btn-primary" id="submitBtn" type="submit" value="Обновить Email"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="row">
+            <form class="form-horizontal" id="submitEmailForm" action="~/MyAccount/Pass" method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label class="control-label" autocomplete="off" for="PasswordNew">Новый пароль</label>
+                    <input class="form-control" required maxlength="40" type="password" id="PasswordNew" name="PasswordNew" value="" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" autocomplete="off" for="ConfirmPassword">Подтверждение пароля</label>
+                    <input class="form-control" required maxlength="40" type="password" id="ConfirmPassword" name="ConfirmPassword" value="" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" autocomplete="off" for="Password">Текущий пароль</label>
+                    <input class="form-control" maxlength="40" required type="password" id="Password" name="Password" value="" />
+                </div>
+                <input class="btn btn-primary" id="submitBtn1" type="submit" value="Обновить пароль" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitPassForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            $("#submitBtn1").attr("disabled", true);
+            return true;
+        });
+        
+        $("#submitEmailForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            $("#submitBtn1").attr("disabled", true);
+            return true;
+        });
+    });
+</script>

@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+
+<html>
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <title>Вход</title>
+</head>
+<body>
+<div class="container">
+    
+    
+    <form class="form-horizontal" id="submitForm" action="~/Login/Index" method="POST">
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <div id="legend">
+                <legend class="">Вход</legend>
+            </div>
+            @if (Session["Response"] != null)
+            {
+                <div class="col-sm-12 alert alert-danger">
+                    <p>@Session["Response"].ToString()</p>
+                </div>
+                Session["Response"] = null;
+            }
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-sm-2">E-mail</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" autocomplete="off" required maxlength="40" id="inputEmail" placeholder="E-mail" name="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="control-label col-sm-2">Пароль</label>
+                <div class="col-sm-8">
+                    <input type="password" class="form-control" autocomplete="off" required maxlength="40" id="inputPassword" placeholder="Пароль" name="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-8">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-8">
+                    <button type="submit" id="submitBtn" class="btn btn-primary">Войти</button>
+
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <label class="control-label">Не зарегистрированы?</label>
+    <a href="~/Registration/Index" id="regBtn" class="btn btn-success">Регистрация</a>
+</div>
+</body>
+</html>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            $("#regBtn").attr("disabled", true);
+            return true;
+        });
+        $("#regBtn").click(function() {
+            $(this).attr("disabled", true);
+        });
+    });
+</script>

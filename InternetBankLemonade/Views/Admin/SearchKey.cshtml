@@ -1,0 +1,46 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.Passports>
+@{
+    ViewBag.Title = "Обновление ключей клиента";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<h2>Обновление ключей клиента</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            @if (Session["Error"] != null)
+            {
+                <div class="col-sm-12 alert alert-danger">
+                    <p>@Session["Error"].ToString()</p>
+                </div>
+                Session["Error"] = null;
+            }
+            @if (Session["Success"] != null)
+            {
+                <div class="col-sm-12 alert alert-success">
+                    <p>@Session["Success"].ToString()</p>
+                </div>
+                Session["Success"] = null;
+            }
+            <form class="form-horizontal" id="submitForm" action="~/Admin/Keys" method="post">
+                @Html.AntiForgeryToken()
+                <label class="control-label">Введите личный номер для обновления</label>
+                <label class="control-label">ключей пользователя</label>
+                <input type="text" autocomplete="off" class="form-control" maxlength="40" required name="PassportNumber" />
+                <br />
+                <input type="submit" class="btn btn-primary" id="submitBtn" value="Обновить" />
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+</script>

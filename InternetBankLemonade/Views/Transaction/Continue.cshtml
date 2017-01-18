@@ -1,0 +1,50 @@
+﻿@model InternetBankLemonade.Models.Account
+@{
+    ViewBag.Title = "Перевод";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Перевод</h2>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <form class="form-horizontal" id="submitForm" action="~/Transaction/EnterAmount" method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <div class="col-md-2">
+                        <label class="control-label">Сумма</label>
+                    </div>
+                    <div class="col-md-2">
+                        <input class="form-control" autocomplete="off" required type="number" min="0.1" max="1000" step="0.1" name="MoneyAmount" id="MoneyAmount" />
+
+                    </div>
+                    <div class="col-md-8">
+                        <label class="control-label text-left">@Session["CurrencyCode"]</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <label class="control-label">Введите ключ номер @Session["SessionKeyNumber"]</label>
+                        <input class="form-control" autocomplete="off" required maxlength="15" type="password" name="SessionKey" />
+                    </div>
+                </div>
+                <input class="btn btn-primary" id="submitBtn" type="submit" value="Перевести"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function () {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+</script>
+
+    
+
+

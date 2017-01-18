@@ -1,0 +1,78 @@
+﻿@model IEnumerable<InternetBankLemonade.Models.Account>
+@{
+    ViewBag.Title = "Выписка";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Выписка</h2>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="~/Scripts/jquery.ui.datepicker.validation.min.js"></script>
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm-12 alert alert-danger" style="display: none;" id="errorLabel">
+                <label class="control-label">Введите правилный диапазон дат</label>
+            </div>
+            <form class="form-horizontal" id="submitForm" action="~/Order/Get" method="get">
+                <div class="form-group">
+                    <label class="control-label">Введите карту:</label>
+                    <select class="form-control" name="CardNumber">
+                        <option>Все карты</option>
+                        @foreach (var item in Model)
+                        {
+                            <option>@item.CardNumber</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">С:</label>
+                    <input class="form-control dpDate" id="FirstDate" type="text" name="FirstDate"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">По:</label>
+                    <input class="form-control dpDate" id="SecondDate" type="text" name="SecondDate"/>
+                </div>
+                
+                <input class="btn btn-primary" id="submitBtn" type="submit" value="Получить"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#submitForm").submit(function() {
+            $("#submitBtn").attr("disabled", true);
+            return true;
+        });
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = (month) + "/" + (day) + "/" + now.getFullYear();
+        $('#FirstDate').val(today);
+        $('#SecondDate').val(today);
+        $('#FirstDate, #SecondDate').datepicker();
+        var errorLabel = $('#errorLabel');
+        $('#FirstDate').on('change', '', function () {
+            if (new Date($('#FirstDate').val()) > new Date($('#SecondDate').val())) {
+                errorLabel.show();
+                $("#submitBtn").attr("disabled", true);
+            } else {
+                errorLabel.hide();
+                $("#submitBtn").attr("disabled", false);
+            }
+        });
+        $('#SecondDate').on('change', '', function () {
+            if (new Date($('#FirstDate').val()) > new Date($('#SecondDate').val())) {
+                errorLabel.show();
+                $("#submitBtn").attr("disabled", true);
+            } else {
+                errorLabel.hide();
+                $("#submitBtn").attr("disabled", false);
+            }
+        });
+    });
+</script>
+
